@@ -23,7 +23,7 @@ jobs:
 
       # Step 3: Install Newman
       - name: Install Newman
-        run: npm install -g newman@7
+        run: npm install -g newman
 
       # Step 4: Run Postman Collection
       - name: Run Postman Collection
