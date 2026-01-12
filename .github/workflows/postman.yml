@@ -23,3 +23,9 @@ jobs:
         -e Environments/QA.postman_environment.json \
         -d TestData/UsersTestData.json \
         -r cli,html,json-summary
+
+     - name: Upload HTML Report
+        uses: actions/upload-artifact@v3
+        with:
+          name: Newman-HTML-Report
+          path: Reports/report.html
