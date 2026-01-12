@@ -1,0 +1,348 @@
+{
+	"info": {
+		"_postman_id": "1ddeb762-5e73-4d8e-8db1-46f79ce67c0c",
+		"name": "UserManagementAPI",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+		"_exporter_id": "20291661",
+		"_collection_link": "https://test00-0681.postman.co/workspace/Test-Workspace~3b7acd8b-c2be-4812-82c2-78995ff12011/collection/20291661-1ddeb762-5e73-4d8e-8db1-46f79ce67c0c?action=share&source=collection_link&creator=20291661"
+	},
+	"item": [
+		{
+			"name": "GET ALL Users",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"pm.response.to.have.status(200);"
+						],
+						"type": "text/javascript",
+						"packages": {},
+						"requests": {}
+					}
+				}
+			],
+			"protocolProfileBehavior": {
+				"disableBodyPruning": true
+			},
+			"request": {
+				"method": "GET",
+				"header": [],
+				"body": {
+					"mode": "formdata",
+					"formdata": [
+						{
+							"key": "username",
+							"value": "demo",
+							"type": "text"
+						},
+						{
+							"key": "key",
+							"value": "tFRjh4qWprYuIeFdZQo3JRwmksD2whES12v30Sbg0BFfZjXRwjyUKDC8oXGnwKaz0UKHZe2HtdY7VUd4wHnOUkPr6MMhqCP8L6pCew6hOKNmfqqo1Dq54sTldLqEnuzsXG0xWqYxy4aGSHHru7DwJcjKYP28NVsTcG3zohiJLpdh3WdUBoHOvWNMKpqWIM77tr0T1kVCkkjpGebvJCIvRlJ4GW6Jx1Grr1v5USMzWpRMO45IycW5YNqrx7URT3ne",
+							"type": "text"
+						}
+					]
+				},
+				"url": {
+					"raw": "{{URL}}/users",
+					"host": [
+						"{{URL}}"
+					],
+					"path": [
+						"users"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "GET Single User",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"pm.test(\"Status code is 200\", function () {\r",
+							"    pm.response.to.have.status(200);\r",
+							"});\r",
+							"let jsonData = pm.response.json(); //Converts the response body into a JavaScript object.\r",
+							"\r",
+							"pm.test(\"Response contains id = 1\", function () {\r",
+							"    pm.expect(jsonData.id).to.eql(1); //Accesses the id property from the JSON object.\r",
+							"});"
+						],
+						"type": "text/javascript",
+						"packages": {},
+						"requests": {}
+					}
+				}
+			],
+			"protocolProfileBehavior": {
+				"disableBodyPruning": true
+			},
+			"request": {
+				"method": "GET",
+				"header": [],
+				"body": {
+					"mode": "formdata",
+					"formdata": [
+						{
+							"key": "username",
+							"value": "demo",
+							"type": "text"
+						},
+						{
+							"key": "key",
+							"value": "tFRjh4qWprYuIeFdZQo3JRwmksD2whES12v30Sbg0BFfZjXRwjyUKDC8oXGnwKaz0UKHZe2HtdY7VUd4wHnOUkPr6MMhqCP8L6pCew6hOKNmfqqo1Dq54sTldLqEnuzsXG0xWqYxy4aGSHHru7DwJcjKYP28NVsTcG3zohiJLpdh3WdUBoHOvWNMKpqWIM77tr0T1kVCkkjpGebvJCIvRlJ4GW6Jx1Grr1v5USMzWpRMO45IycW5YNqrx7URT3ne",
+							"type": "text"
+						}
+					]
+				},
+				"url": {
+					"raw": "{{URL}}/users/1",
+					"host": [
+						"{{URL}}"
+					],
+					"path": [
+						"users",
+						"1"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "POST Create User",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"pm.test(\"Status code is 201\", function () {\r",
+							"    pm.response.to.have.status(201);\r",
+							"});\r",
+							"let jsonData = pm.response.json();\r",
+							"\r",
+							"pm.test(\"Response contains id\", function () {\r",
+							"    pm.expect(jsonData).to.have.property(\"id\");\r",
+							"});\r",
+							"pm.environment.set(\"userId\", jsonData.id); //set environment variable for userId\r",
+							"\r",
+							""
+						],
+						"type": "text/javascript",
+						"packages": {},
+						"requests": {}
+					}
+				}
+			],
+			"request": {
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "o\t{\r\no\t  \"name\": \"{{name}}\",\r\no\t  \"username\": \"{{username}}\",\r\no\t  \"email\": \"{{email}}\"\r\no\t}\r\n"
+				},
+				"url": {
+					"raw": "{{URL}}/users/",
+					"host": [
+						"{{URL}}"
+					],
+					"path": [
+						"users",
+						""
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "GET new created user",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							""
+						],
+						"type": "text/javascript",
+						"packages": {},
+						"requests": {}
+					}
+				}
+			],
+			"protocolProfileBehavior": {
+				"disableBodyPruning": true
+			},
+			"request": {
+				"method": "GET",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": ""
+				},
+				"url": {
+					"raw": "{{URL}}/users/{{userId}}",
+					"host": [
+						"{{URL}}"
+					],
+					"path": [
+						"users",
+						"{{userId}}"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Update ALL User Details",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"pm.test(\"Status code is 200\", function () {\r",
+							"    pm.response.to.have.status(200);\r",
+							"});\r",
+							"let jsonData = pm.response.json();\r",
+							"\r",
+							"console.log(\"Response JSON:\", jsonData);"
+						],
+						"type": "text/javascript",
+						"packages": {},
+						"requests": {}
+					}
+				}
+			],
+			"request": {
+				"method": "PUT",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\r\n     \r\n        \"name\": \"Leanne 2 Graham\",\r\n        \"username\": \"Bret2\",\r\n        \"email\": \"Sincere@april.biz2\",\r\n        \"address\": {\r\n            \"street\": \"Kulas Light2\",\r\n            \"suite\": \"Apt. 556\",\r\n            \"city\": \"Gwenborough\",\r\n            \"zipcode\": \"92998-3874\",\r\n            \"geo\": {\r\n                \"lat\": \"-327.3159\",\r\n                \"lng\": \"81.1496\"\r\n            }\r\n        },\r\n        \"phone\": \"1-7720-736-8031 x56442\",\r\n        \"website\": \"hi2ldegard.org\",\r\n        \"company\": {\r\n            \"name\": \"Roma2guera-Crona\",\r\n            \"catchPhrase\": \"Multi2-layered client-server neural-net\",\r\n            \"bs\": \"harness rea2l-time e-markets\"\r\n        }\r\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "{{URL}}/users/1",
+					"host": [
+						"{{URL}}"
+					],
+					"path": [
+						"users",
+						"1"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Update User Name",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"pm.test(\"Status code is 200\", function () {\r",
+							"    pm.response.to.have.status(200);\r",
+							"});\r",
+							"let jsonData = pm.response.json();\r",
+							"\r",
+							"console.log(\"Response JSON:\", jsonData);"
+						],
+						"type": "text/javascript",
+						"packages": {},
+						"requests": {}
+					}
+				}
+			],
+			"request": {
+				"method": "PATCH",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "  \r\n  {\r\n          \"name\": \"Leanne 3 Graham\"\r\n  }",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "{{URL}}/users/{{userId}}",
+					"host": [
+						"{{URL}}"
+					],
+					"path": [
+						"users",
+						"{{userId}}"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Delete a specific user",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"pm.test(\"Status code is 200\", function () {\r",
+							"    pm.response.to.have.status(200);\r",
+							"});\r",
+							"let jsonData = pm.response.json();\r",
+							"\r",
+							"console.log(\"Response JSON:\", jsonData);"
+						],
+						"type": "text/javascript",
+						"packages": {},
+						"requests": {}
+					}
+				}
+			],
+			"request": {
+				"method": "DELETE",
+				"header": [],
+				"url": {
+					"raw": "{{URL}}/users/{{userId}}",
+					"host": [
+						"{{URL}}"
+					],
+					"path": [
+						"users",
+						"{{userId}}"
+					]
+				}
+			},
+			"response": []
+		}
+	],
+	"event": [
+		{
+			"listen": "prerequest",
+			"script": {
+				"type": "text/javascript",
+				"packages": {},
+				"requests": {},
+				"exec": [
+					""
+				]
+			}
+		},
+		{
+			"listen": "test",
+			"script": {
+				"type": "text/javascript",
+				"packages": {},
+				"requests": {},
+				"exec": [
+					""
+				]
+			}
+		}
+	]
+}
