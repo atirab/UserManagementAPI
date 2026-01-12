@@ -1,32 +1,47 @@
 name: Run Postman Tests
 
 on:
-  schedule:
-    - cron: '0 7 * * 1-5'  # 7 AM UTC weekdays
   push:
     branches: [ main ]
+  schedule:
+    - cron: '14 14 * * 1-5'  # 9 AM Toronto time weekdays (UTC-5)
 
 jobs:
   postman-tests:
     runs-on: ubuntu-latest
 
     steps:
+      # Step 1: Checkout repository
       - name: Checkout Repository
         uses: actions/checkout@v3
 
+      # Step 2: Setup Node.js
+      - name: Setup Node.js
+        uses: actions/setup-node@v3
+        with:
+          node-version: '18'
+
+      # Step 3: Install Newman
       - name: Install Newman
         run: npm install -g newman
 
+      # Step 4: Run Postman Collection
       - name: Run Postman Collection
         run: |
+          TIMESTAMP=$(date +'%Y%m%d_%H%M%S')
+          echo "Generating latest run-report.html and timestamped report"
+          # Overwrite latest report
           newman run Collections/UserManagementAPI.postman_collection.json \
-          -e Environments/QA.postman_environment.json \
-          -d TestData/UsersTestData.json \
-          -r cli,html,json-summary \
-          --reporter-html-export Reports/report.html
+            -e Environments/QA.postman_environment.json \
+            -d TestData/UsersTestData.json \
+            -r cli,html,json-summary \
+            --reporter-html-export Reports/run-report.html
+          # Create a timestamped historical copy
+          cp Reports/run-report.html Reports/run-report_$TIMESTAMP.html
 
-      - name: Upload HTML Report
+      # Step 5: Upload HTML Reports as artifacts
+      - name: Upload HTML Reports
         uses: actions/upload-artifact@v4
         with:
-          name: Newman-HTML-Report
-          path: Reports/run-report.html
+          name: Newman-HTML-Reports
+          path: Reports/run-report*.html
