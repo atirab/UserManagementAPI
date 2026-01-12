@@ -2,7 +2,7 @@ name: Run Postman Tests
 
 on:
   schedule:
-    - cron: '0 7 * * 1-5'
+    - cron: '0 7 * * 1-5'  # 7 AM UTC weekdays
   push:
     branches: [ main ]
 
@@ -11,20 +11,21 @@ jobs:
     runs-on: ubuntu-latest
 
     steps:
-    - name: Checkout Repository
-      uses: actions/checkout@v3
+      - name: Checkout Repository
+        uses: actions/checkout@v3
 
-    - name: Install Newman
-      run: npm install -g newman
+      - name: Install Newman
+        run: npm install -g newman
 
-    - name: Run Postman Collection
-      run: |
-        newman run Collections/UserManagementAPI.postman_collection.json \
-        -e Environments/QA.postman_environment.json \
-        -d TestData/UsersTestData.json \
-        -r cli,html,json-summary
+      - name: Run Postman Collection
+        run: |
+          newman run Collections/UserManagementAPI.postman_collection.json \
+          -e Environments/QA.postman_environment.json \
+          -d TestData/UsersTestData.json \
+          -r cli,html,json-summary \
+          --reporter-html-export Reports/report.html
 
-     - name: Upload HTML Report
+      - name: Upload HTML Report
         uses: actions/upload-artifact@v3
         with:
           name: Newman-HTML-Report
